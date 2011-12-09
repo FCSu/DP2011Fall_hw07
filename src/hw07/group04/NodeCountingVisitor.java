@@ -64,7 +64,7 @@ public class NodeCountingVisitor extends JCTree.Visitor {
     private String curFile;
     
     public NodeCountingVisitor() {
-        this.visited = new HashSet<>();
+        this.visited = new HashSet<String>();
     }
     
     public String[] list() {
