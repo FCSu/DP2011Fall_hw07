@@ -8,8 +8,6 @@ import java.util.HashSet;
 
 
 public class NodeCountingVisitor extends JCTree.Visitor {
-    
-    // under construction
 
     private int JCAnnotaion_count;
     private int JCArrayAccess_count;
@@ -136,7 +134,7 @@ public class NodeCountingVisitor extends JCTree.Visitor {
             count(l.head);
     }
     
-    
+    @Override
     public void visitTopLevel(JCCompilationUnit tree) {
         this.curFile = tree.sourcefile.getName();
         if (!this.visited.contains(tree.sourcefile.getName() + String.valueOf(tree.pos))) {
@@ -147,12 +145,14 @@ public class NodeCountingVisitor extends JCTree.Visitor {
         count(tree.pid);
         count(tree.defs);
     }
-
+    
+    @Override
     public void visitImport(JCImport tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCImport_count++;
         count(tree.qualid);
     }
-
+    
+    @Override
     public void visitClassDef(JCClassDecl tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCClassDecl_count++;
         count(tree.mods);
@@ -162,6 +162,7 @@ public class NodeCountingVisitor extends JCTree.Visitor {
         count(tree.defs);
     }
 
+    @Override
     public void visitMethodDef(JCMethodDecl tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCMethodDecl_count++;
         count(tree.mods);
@@ -172,6 +173,7 @@ public class NodeCountingVisitor extends JCTree.Visitor {
         count(tree.body);
     }
 
+    @Override
     public void visitVarDef(JCVariableDecl tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCVariableDecl_count++;
         count(tree.mods);
@@ -179,27 +181,32 @@ public class NodeCountingVisitor extends JCTree.Visitor {
         count(tree.init);
     }
 
+    @Override
     public void visitSkip(JCSkip tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCSkip_count++;
     }
 
+    @Override
     public void visitBlock(JCBlock tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCBlock_count++;
         count(tree.stats);
     }
 
+    @Override
     public void visitDoLoop(JCDoWhileLoop tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCDoWhileLoop_count++;
         count(tree.body);
         count(tree.cond);
     }
 
+    @Override
     public void visitWhileLoop(JCWhileLoop tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCWhileLoop_count++;
         count(tree.cond);
         count(tree.body);
     }
 
+    @Override
     public void visitForLoop(JCForLoop tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCForLoop_count++;
         count(tree.init);
@@ -208,6 +215,7 @@ public class NodeCountingVisitor extends JCTree.Visitor {
         count(tree.body);
     }
 
+    @Override
     public void visitForeachLoop(JCEnhancedForLoop tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCEnhancedForLoop_count++;
         count(tree.var);
@@ -215,29 +223,34 @@ public class NodeCountingVisitor extends JCTree.Visitor {
         count(tree.body);
     }
 
+    @Override
     public void visitLabelled(JCLabeledStatement tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCLabeledStatement_count++;
         count(tree.body);
     }
 
+    @Override
     public void visitSwitch(JCSwitch tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCSwitch_count++;
         count(tree.selector);
         count(tree.cases);
     }
 
+    @Override
     public void visitCase(JCCase tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCCase_count++;
         count(tree.pat);
         count(tree.stats);
     }
 
+    @Override
     public void visitSynchronized(JCSynchronized tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCSynchronized_count++;
         count(tree.lock);
         count(tree.body);
     }
 
+    @Override
     public void visitTry(JCTry tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCTry_count++;
         count(tree.body);
@@ -245,12 +258,14 @@ public class NodeCountingVisitor extends JCTree.Visitor {
         count(tree.finalizer);
     }
 
+    @Override
     public void visitCatch(JCCatch tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCCatch_count++;
         count(tree.param);
         count(tree.body);
     }
 
+    @Override
     public void visitConditional(JCConditional tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCConditional_count++;
         count(tree.cond);
@@ -258,6 +273,7 @@ public class NodeCountingVisitor extends JCTree.Visitor {
         count(tree.falsepart);
     }
 
+    @Override
     public void visitIf(JCIf tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCIf_count++;
         count(tree.cond);
@@ -265,41 +281,49 @@ public class NodeCountingVisitor extends JCTree.Visitor {
         count(tree.elsepart);
     }
 
+    @Override
     public void visitExec(JCExpressionStatement tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCExpressionStatement_count++;
         count(tree.expr);
     }
 
+    @Override
     public void visitBreak(JCBreak tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCBreak_count++;
     }
 
+    @Override
     public void visitContinue(JCContinue tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCContinue_count++;
     }
 
+    @Override
     public void visitReturn(JCReturn tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCReturn_count++;
         count(tree.expr);
     }
 
+    @Override
     public void visitThrow(JCThrow tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCThrow_count++;
         count(tree.expr);
     }
 
+    @Override
     public void visitAssert(JCAssert tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCAssert_count++;
         count(tree.cond);
         count(tree.detail);
     }
 
+    @Override
     public void visitApply(JCMethodInvocation tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCMethodInvocation_count++;
         count(tree.meth);
         count(tree.args);
     }
 
+    @Override
     public void visitNewClass(JCNewClass tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCNewClass_count++;
         count(tree.encl);
@@ -308,6 +332,7 @@ public class NodeCountingVisitor extends JCTree.Visitor {
         count(tree.def);
     }
 
+    @Override
     public void visitNewArray(JCNewArray tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCNewArray_count++;
         count(tree.elemtype);
@@ -315,80 +340,95 @@ public class NodeCountingVisitor extends JCTree.Visitor {
         count(tree.elems);
     }
 
+    @Override
     public void visitParens(JCParens tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCParens_count++;
         count(tree.expr);
     }
 
+    @Override
     public void visitAssign(JCAssign tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCAssign_count++;
         count(tree.lhs);
         count(tree.rhs);
     }
 
+    @Override
     public void visitAssignop(JCAssignOp tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCAssignOp_count++;
         count(tree.lhs);
         count(tree.rhs);
     }
 
+    @Override
     public void visitUnary(JCUnary tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCUnary_count++;
         count(tree.arg);
     }
 
+    @Override
     public void visitBinary(JCBinary tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCBinary_count++;
         count(tree.lhs);
         count(tree.rhs);
     }
 
+    @Override
     public void visitTypeCast(JCTypeCast tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCTypeCast_count++;
         count(tree.clazz);
         count(tree.expr);
     }
 
+    @Override
     public void visitTypeTest(JCInstanceOf tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCInstanceOf_count++;
         count(tree.expr);
         count(tree.clazz);
     }
 
+    @Override
     public void visitIndexed(JCArrayAccess tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCArrayAccess_count++;
         count(tree.indexed);
         count(tree.index);
     }
 
+    @Override
     public void visitSelect(JCFieldAccess tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCFieldAccess_count++;
         count(tree.selected);
     }
 
+    @Override
     public void visitIdent(JCIdent tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCIdent_count++;
     }
 
+    @Override
     public void visitLiteral(JCLiteral tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCLiteral_count++;
     }
 
+    @Override
     public void visitTypeIdent(JCPrimitiveTypeTree tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCPrimitiveTypeTree_count++;
     }
 
+    @Override
     public void visitTypeArray(JCArrayTypeTree tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCArrayTypeTree_count++;
         count(tree.elemtype);
     }
 
+    @Override
     public void visitTypeApply(JCTypeApply tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCTypeApply_count++;
         count(tree.clazz);
         count(tree.arguments);
     }
 
+    @Override
     public void visitTypeParameter(JCTypeParameter tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCTypeParameter_count++;
         count(tree.bounds);
@@ -407,31 +447,34 @@ public class NodeCountingVisitor extends JCTree.Visitor {
         if (!this.visited.contains(curFile + String.valueOf(that.pos)))this.TypeBoundKind_count++;
     }
 
+    @Override
     public void visitModifiers(JCModifiers tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCModifiers_count++;
         count(tree.annotations);
     }
 
+    @Override
     public void visitAnnotation(JCAnnotation tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCAnnotaion_count++;
         count(tree.annotationType);
         count(tree.args);
     }
 
+    @Override
     public void visitErroneous(JCErroneous tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.JCErroneous_count++;
     }
 
+    @Override
     public void visitLetExpr(LetExpr tree) {
         if (!this.visited.contains(curFile + String.valueOf(tree.pos)))this.LetExpr_count++;
         count(tree.defs);
         count(tree.expr);
     }
 
+    @Override
     public void visitTree(JCTree that) {
         assert false;
     }
-
-    
     
 }
